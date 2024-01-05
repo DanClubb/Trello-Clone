@@ -13,9 +13,17 @@ export default {
         darkgray: '#1d2125',
         lightblue: '#bfdbfe',
         skyblue: '#579dff'
+      },
+      maxWidth: {
+        200: '50rem'
       }
-      
     },
   },
-  plugins: [],
+  plugins: [
+    // @ts-ignore:next-line
+    function ({ addVariant }) {
+      addVariant('first-child', '& > :first-child');
+      addVariant('first-child-hover', '& > :first-child:hover');
+  }
+  ],
 } satisfies Config;
