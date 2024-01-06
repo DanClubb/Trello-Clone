@@ -24,7 +24,7 @@ export default function RootLayout({
 }) {
   return (
     <html lang="en">
-      <body className={`font-mono overflow-hidden bg-darkgray text-lightblue`}>
+      <body className={`flex flex-col font-mono overflow-hidden bg-darkgray text-lightblue`}>
         <TRPCReactProvider cookies={cookies().toString()}>
           <Header />
           {children}

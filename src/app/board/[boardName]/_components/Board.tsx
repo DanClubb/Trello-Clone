@@ -10,9 +10,14 @@ type BoardProps = {
 export default async function Board({boardName}: BoardProps) {
     const [currentBoard] = await api.board.getByTitle.query({name: boardName})
     return (
-        <div className={`grow ${currentBoard?.color}`}>
-            <BoardHeader boardName={boardName} />
-            <BoardContent />
-        </div>
+        <>
+        {currentBoard && 
+            <div className={`flex flex-col grow ${currentBoard.color} overflow-hidden`}>
+                <BoardHeader boardName={boardName} />
+                <BoardContent boardId={currentBoard.id} />
+            </div>
+        }
+        </>
+        
     )
 }

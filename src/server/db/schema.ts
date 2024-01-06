@@ -37,6 +37,21 @@ export const boards = mysqlTable(
   // })
 );
 
+export const lists = mysqlTable("lists", {
+  id: bigint("id", { mode: "number" }).primaryKey().autoincrement(),
+  name: varchar("name", { length: 255 }).notNull(),
+  boardId: int("board_id").notNull(),
+  position: int("position").notNull(),
+  createdAt: timestamp("created_at")
+      .default(sql`CURRENT_TIMESTAMP`)
+      .notNull(),
+  updatedAt: timestamp("updatedAt").onUpdateNow(),
+},
+  (table) => ({
+    boardIdx: index("board_idx").on(table.boardId)
+  })
+);
+
 export const users = mysqlTable("user", {
   id: varchar("id", { length: 255 }).notNull().primaryKey(),
   name: varchar("name", { length: 255 }),
