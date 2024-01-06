@@ -8,7 +8,7 @@ type BoardContentProps = {
 }
 
 export default async function BoardContent({boardId}: BoardContentProps) {
-    const lists = await (await api.list.getAll.query({boardId})).sort((a, b) => a.position - b.position)
+    const lists = (await api.list.getAll.query({boardId})).sort((a, b) => a.position - b.position)
     return (
         <div className="flex gap-4 px-3 grow max-h-[calc(100%-6.75rem)] overflow-auto">
             {

@@ -4,10 +4,9 @@ import BoardHeader from "./BoardHeader";
 
 type BoardProps = {
     boardName:  string;
-
 }
 
-export default async function Board({boardName}: BoardProps) {
+export default async function BoardCanvas({boardName}: BoardProps) {
     const [currentBoard] = await api.board.getByTitle.query({name: boardName})
     return (
         <>

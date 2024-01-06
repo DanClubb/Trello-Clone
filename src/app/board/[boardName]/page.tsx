@@ -1,11 +1,11 @@
-import Board from "./_components/Board"
+import BoardCanvas from "./_components/BoardCanvas"
 import BoardNav from "./_components/BoardNav"
 
 export default async function page({params} : {params: {boardName: string}}) {
     return (
         <div className="flex">
-            <BoardNav />
-            <Board boardName={params.boardName} />
+            <BoardNav boardName={params.boardName} />
+            <BoardCanvas boardName={params.boardName} />
         </div>
     )
 }
