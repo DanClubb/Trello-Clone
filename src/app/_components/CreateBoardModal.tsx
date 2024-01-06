@@ -8,20 +8,24 @@ type CreateBoardModalProps = {
 
 export default function CreateBoardModal({setShowModal}: CreateBoardModalProps) {
     const router = useRouter()
-    const boardColors = ['red', 'sky', 'violet', 'green', 'yellow']
-    const [activeColor, setActiveColor] = useState('red')
+    const boardColors = ['bg-red-700', 'bg-sky-700', 'bg-violet-700', 'bg-green-700', 'bg-yellow-700']
+    const [activeColor, setActiveColor] = useState('bg-red-700')
     const [boardTitle, setBoardTitle] = useState('')
     const boardTitleRef = useRef<HTMLInputElement>(null)
 
     const createBoard = api.board.createBoard.useMutation({
-        onSuccess: () => {
-            router.replace(`/board/${boardTitle.split(' ').join('-').toLowerCase()}`)
+        onSuccess: async () => {
+            router.refresh()
+            setTimeout(() => {
+              router.replace(`/board/${boardTitle.split(' ').join('-').toLowerCase()}`)
+              setShowModal(false)  
+            }, 350)
         }
     })
 
     const handleModalSubmit = (e: React.FormEvent<HTMLFormElement>) => {
         e.preventDefault()
-        createBoard.mutate({name: boardTitle})
+        createBoard.mutate({name: boardTitle, color: activeColor})
     }
 
     useEffect(() => {
@@ -46,10 +50,10 @@ export default function CreateBoardModal({setShowModal}: CreateBoardModalProps) 
                             {
                                 boardColors.map((color) => (
                                     <div 
-                                        className={`flex justify-center items-center w-16 h-10 bg-${color}-400 text-xl text-slate-900 cursor-pointer`}
+                                        className={`relative flex justify-center items-center w-16 h-10 ${activeColor === color && 'after:bg-white/[0.3] after:w-full after:h-full after:absolute after:z-10' } ${color} text-2xl text-slate-900 cursor-pointer`}
                                         onClick={() => setActiveColor(color)}
                                     >
-                                        {activeColor === color ? '✔️' : ''}
+                                        {activeColor === color ? <span className="z-20">✔️</span>: ''}
                                     </div>
                                 ))
                             }

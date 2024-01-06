@@ -7,13 +7,14 @@ export default async function Boards() {
 
     return (
         <div className="max-w-200 w-fit">
-            <header className="mb-2">
+            <header className="flex gap-2 mb-2">
                 {/* icon goes here  */}
+                👨‍💻
                 <h2 className="font-semibold">Your Boards</h2>
             </header>
-            <div className="flex gap-4 flex-wrap">
+            <div className="flex gap-4 flex-wrap overflow-y-scroll">
                {usersBoards.map((board) => (
-                        <BoardCard boardName={board.name} />
+                        <BoardCard key={board.id} boardName={board.name} boardColor={board.color} />
                     )   
                 )} 
                 <CreateBoardCard />
