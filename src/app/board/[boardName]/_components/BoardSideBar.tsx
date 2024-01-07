@@ -15,16 +15,16 @@ export default  function BoardSideBar({boardName}: BoardNavProps) {
     const boards = api.board.getAllBoards.useQuery().data
 
     return (
-        <div className={`pt-3 min-h-screen ${sideBarViewToggle ? 'min-w-64' : ' min-w-8'}`}>
+        <div className={`pt-3 min-h-screen ${sideBarViewToggle ? 'min-w-64 w-64' : 'min-w-8 w-8 delay-150'} transition-all duration-500 relative`}>
             <Image 
-                className={`ml-auto mr-2 rounded-sm cursor-pointer ${!sideBarViewToggle && 'rotate-180'} transition duration-300 hover:bg-white/[0.3]`}
+                className={`ml-auto mr-2 rounded-sm cursor-pointer ${!sideBarViewToggle && '-mr-2 bg-black rounded-full rotate-180'} transition duration-300 hover:bg-white/[0.3]`}
                 src={arrow} 
                 width={28} 
                 height={28} 
                 alt='sidebar control arrow'  
                 onClick={() => setSideBarViewToggle((prev) => !prev)}
             />
-            <div className={`flex flex-col ${sideBarViewToggle ? 'block' : 'hidden'}`}>
+            <div className={`flex flex-col transition-all duration-500 ${sideBarViewToggle ? 'translate-x-0 delay-150' : '-translate-x-72'}`}>
                 <h4 className="mb-2 px-4 text-sm font-bold">Your boards</h4>
                 {
                     boards?.map((board) => (
