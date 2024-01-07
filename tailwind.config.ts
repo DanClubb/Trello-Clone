@@ -11,6 +11,7 @@ export default {
       colors: {
         lightgray: '#9fadbc29',
         darkgray: '#1d2125',
+        charcoal: '#22272b',
         lightblue: '#bfdbfe',
         skyblue: '#579dff'
       },

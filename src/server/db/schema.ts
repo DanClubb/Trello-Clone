@@ -52,6 +52,21 @@ export const lists = mysqlTable("lists", {
   })
 );
 
+export const tasks = mysqlTable("tasks", {
+  id: bigint("id", { mode: "number" }).primaryKey().autoincrement(),
+  name: varchar("name", { length: 255 }).notNull(),
+  listId: int("list_id").notNull(),
+  position: int("position").notNull(),
+  createdAt: timestamp("created_at")
+      .default(sql`CURRENT_TIMESTAMP`)
+      .notNull(),
+  updatedAt: timestamp("updatedAt").onUpdateNow(),
+},
+  (table) => ({
+    listIdx: index("list_idx").on(table.listId)
+  })
+);
+
 export const users = mysqlTable("user", {
   id: varchar("id", { length: 255 }).notNull().primaryKey(),
   name: varchar("name", { length: 255 }),

@@ -1,3 +1,5 @@
+import Ellipsis from "~/app/_components/Ellipsis";
+
 type BoardHeaderProps = {
     boardName: string;
 }
@@ -8,7 +10,7 @@ export default function BoardHeader({boardName}: BoardHeaderProps) {
             <h2 className="text-lg">{boardName}</h2>
             <div className="text-lg">✩</div>
             <button className="ml-auto px-3 py-2 bg-slate-200 rounded-sm text-slate-900 text-sm transition hover:bg-slate-50">+ Share</button>
-            <div>...</div>
+            <Ellipsis width={24} height={24} />
         </div>
     )
 }

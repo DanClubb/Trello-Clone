@@ -1,4 +1,3 @@
-import { list } from "postcss";
 import { api } from "~/trpc/server";
 import AddList from "./AddList";
 import List from "./List";
@@ -12,7 +11,7 @@ export default async function BoardContent({boardId}: BoardContentProps) {
     return (
         <div className="flex gap-4 px-3 grow max-h-[calc(100%-6.75rem)] overflow-auto">
             {
-                lists.map((list) => (<List listName={list.name} />))
+                lists.map((list) => (<List listName={list.name} listId={list.id} />))
             }
             <AddList boardId={boardId} numOfLists={lists.length} />
         </div>
