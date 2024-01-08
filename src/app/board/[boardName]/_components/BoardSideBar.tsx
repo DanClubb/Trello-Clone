@@ -27,8 +27,9 @@ export default  function BoardSideBar({boardName}: BoardNavProps) {
             <div className={`flex flex-col transition-all duration-500 ${sideBarViewToggle ? 'translate-x-0 delay-150' : '-translate-x-72'}`}>
                 <h4 className="mb-2 px-4 text-sm font-bold">Your boards</h4>
                 {
-                    boards?.map((board) => (
+                    boards?.map((board, index) => (
                         <Link 
+                            key={index}
                             href={`/board/${board.name.split(' ').join('-').toLowerCase()}`}
                             className={`flex gap-2 px-4 py-2 text-sm ${board.name.toLowerCase() === boardName ? 'bg-zinc-600' : ''} hover:bg-zinc-700`}
                         >

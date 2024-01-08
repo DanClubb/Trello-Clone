@@ -39,7 +39,6 @@ export default function CreateBoardModal({setShowModal}: CreateBoardModalProps) 
                     onClick={() => {
                         setShowModal(false)}}
                 >
-                    {/* <IoClose size='2rem' /> */}
                     close
                 </button>
                 <h1 className="mb-4 text-xl text-center">Create Board</h1>
@@ -48,8 +47,9 @@ export default function CreateBoardModal({setShowModal}: CreateBoardModalProps) 
                         <span>Background</span>
                         <div className="flex gap-2 mt-1">
                             {
-                                boardColors.map((color) => (
+                                boardColors.map((color, index) => (
                                     <div 
+                                        key={index}
                                         className={`relative flex justify-center items-center w-16 h-10 ${activeColor === color && 'after:bg-white/[0.3] after:w-full after:h-full after:absolute after:z-10' } ${color} text-2xl text-slate-900 cursor-pointer`}
                                         onClick={() => setActiveColor(color)}
                                     >

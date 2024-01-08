@@ -37,8 +37,6 @@ export default function List({listName, listId}: ListProps) {
             if(tasks[i]?.createdAt.toLocaleDateString('en-GB', options) === tasks[i+1]?.createdAt.toLocaleDateString('en-GB', options)) tasks.splice(i, 1)
         }
     }
-
-    console.log(showListActions)
     return (
         <div className="p-2 min-w-[17rem] h-fit bg-black rounded-xl text-sm relative">
             <div className="flex items-center mb-1.5">
@@ -52,7 +50,7 @@ export default function List({listName, listId}: ListProps) {
             </div>
             
             <div className="min-h-2">
-                {tasks.map(task => <Task taskName={task.name} />)}
+                {tasks.map((task, index) => <Task key={index} taskName={task.name} />)}
             </div>
             <AddTask listId={listId} setClientTasks={setClientTasks} numOfTasks={tasks.length} />
             {showListActions && <ListActions listId={listId} setShowListActions={setShowListActions} />}
