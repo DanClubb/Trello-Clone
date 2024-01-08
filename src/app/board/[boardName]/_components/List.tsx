@@ -1,6 +1,5 @@
 "use client"
 
-import { useRouter } from "next/navigation";
 import { useState } from "react";
 import Ellipsis from "~/app/_components/Ellipsis";
 import { Tasks } from "~/app/types";
@@ -15,7 +14,6 @@ type ListProps = {
 }
 
 export default function List({listName, listId}: ListProps) {
-    const router = useRouter()
     const [showListActions, setShowListActions] = useState(false)
     const [clientTasks, setClientTasks] = useState<Tasks>([])
     const serverTasks = api.task.getAll.useQuery({listId}).data

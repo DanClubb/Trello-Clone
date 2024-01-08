@@ -47,6 +47,7 @@ export const authOptions: NextAuthOptions = {
       },
     }),
   },
+  // @ts-expect-error-next-line
   adapter: DrizzleAdapter(db, mysqlTable),
   providers: [
     DiscordProvider({

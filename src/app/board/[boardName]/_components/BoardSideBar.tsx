@@ -1,5 +1,6 @@
 "use client"
 
+import { StaticImport } from "next/dist/shared/lib/get-img-props"
 import Image from "next/image"
 import Link from "next/link"
 import arrow from "public/arrow.svg"
@@ -17,8 +18,8 @@ export default  function BoardSideBar({boardName}: BoardNavProps) {
     return (
         <div className={`pt-3 min-h-screen ${sideBarViewToggle ? 'min-w-64 w-64' : 'min-w-8 w-8 delay-150'} transition-all duration-500 relative`}>
             <Image 
-                className={`ml-auto mr-2 rounded-sm cursor-pointer ${!sideBarViewToggle && '-mr-2 bg-black rounded-full rotate-180'} transition duration-300 hover:bg-white/[0.3]`}
-                src={arrow} 
+                className={`ml-auto cursor-pointer ${!sideBarViewToggle && '-mr-2 bg-black rounded-full rotate-180'} transition-all duration-300 hover:bg-white/[0.3]`}
+                src={arrow as StaticImport} 
                 width={28} 
                 height={28} 
                 alt='sidebar control arrow'  
