@@ -5,7 +5,7 @@ type EllipsisProps = {
 
 export default function Ellipsis({width, height}: EllipsisProps) {
     return (
-        <svg className="cursor-pointer" width={width} height={height} role="presentation" focusable="false" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+        <svg width={width} height={height} role="presentation" focusable="false" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
             <path 
                 fill-rule="evenodd" 
                 clip-rule="evenodd" 
