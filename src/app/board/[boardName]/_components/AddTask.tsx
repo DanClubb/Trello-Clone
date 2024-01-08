@@ -1,3 +1,4 @@
+import { useRouter } from "next/navigation";
 import { useState } from "react";
 import { Tasks } from "~/app/types";
 import { api } from "~/trpc/react";
@@ -9,10 +10,15 @@ type AddTaskProps = {
 }
 
 export default function AddTask({listId, numOfTasks, setClientTasks}: AddTaskProps) {
+    const router = useRouter()
     const [addTaskClicked, setAddTaskClicked] = useState(false)
     const [taskName, setTaskName] = useState('')
 
-    const createTask = api.task.create.useMutation()
+    const createTask = api.task.create.useMutation({
+        onSuccess: () => {
+            router.refresh()
+        }
+    })
 
     const handleCreateTask = (e: React.FormEvent<HTMLFormElement>) => {
         e.preventDefault()
