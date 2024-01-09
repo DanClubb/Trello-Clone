@@ -5,4 +5,5 @@ export type Tasks = {
     updatedAt: Date | null;
     position: number;
     listId: number;
+    description: string | null;
 }[]

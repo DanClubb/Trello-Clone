@@ -23,7 +23,7 @@ export default function AddTask({listId, numOfTasks, setClientTasks}: AddTaskPro
     const handleCreateTask = (e: React.FormEvent<HTMLFormElement>) => {
         e.preventDefault()
         createTask.mutate({name: taskName, listId, position: numOfTasks + 1})
-        setClientTasks((prev) => [...prev, {id: 3, name: taskName, listId, position: numOfTasks + 1, createdAt: new Date(), updatedAt: null}])
+        setClientTasks((prev) => [...prev, {id: 3, name: taskName, listId, position: numOfTasks + 1, description: null, createdAt: new Date(), updatedAt: null}])
         setTaskName('')
     }
 
