@@ -7,7 +7,7 @@ type BoardProps = {
 }
 
 export default async function BoardCanvas({boardName}: BoardProps) {
-    const [currentBoard] = await api.board.getByTitle.query({name: boardName})
+    const [currentBoard] = await api.board.getByTitle.query({name: boardName.split('-').join(' ')})
     return (
         <>
         {currentBoard && 

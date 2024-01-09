@@ -10,21 +10,21 @@ type AddTaskProps = {
 }
 
 export default function AddTask({listId, numOfTasks, setClientTasks}: AddTaskProps) {
-    const router = useRouter()
+    const router = useRouter();
     const [addTaskClicked, setAddTaskClicked] = useState(false)
     const [taskName, setTaskName] = useState('')
 
     const createTask = api.task.create.useMutation({
         onSuccess: () => {
             router.refresh()
+            setClientTasks((prev) => [...prev, {id: 3, name: taskName, listId, position: numOfTasks + 1, description: null, createdAt: new Date(), updatedAt: null}])
+            setTaskName('')
         }
     })
 
     const handleCreateTask = (e: React.FormEvent<HTMLFormElement>) => {
         e.preventDefault()
         createTask.mutate({name: taskName, listId, position: numOfTasks + 1})
-        setClientTasks((prev) => [...prev, {id: 3, name: taskName, listId, position: numOfTasks + 1, description: null, createdAt: new Date(), updatedAt: null}])
-        setTaskName('')
     }
 
     const handleTextareaGrowth = (e: React.FormEvent<HTMLTextAreaElement>) => {
@@ -57,7 +57,7 @@ export default function AddTask({listId, numOfTasks, setClientTasks}: AddTaskPro
                 className="px-3 py-2 w-full rounded text-left hover:bg-slate-300/[0.3] transition"
                 onClick={() => setAddTaskClicked(true)}
             >
-                + Add a card
+                {createTask.isLoading ? '...Loading' : '+ Add a card'}
             </button>
         }
         </>

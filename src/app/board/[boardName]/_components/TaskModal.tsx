@@ -33,7 +33,6 @@ export default function CreateBoardModal({taskName, taskDescription, listName, s
             <div className="px-6 pt-4 pb-8 min-w-[21rem] md:w-[48rem] rounded-xl absolute top-2/4 left-2/4 -translate-y-3/4 -translate-x-1/2 z-20 bg-darkgray">
                 <button className="block mt-2 mr-2 ml-auto" 
                     onClick={() => {
-                        router.refresh()
                         setShowModal(false)}}
                 >
                     close

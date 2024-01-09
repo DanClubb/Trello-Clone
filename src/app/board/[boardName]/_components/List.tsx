@@ -18,24 +18,26 @@ export default function List({listName, listId}: ListProps) {
     const router = useRouter()
     const [showListActions, setShowListActions] = useState(false)
     const [clientTasks, setClientTasks] = useState<Tasks>([])
+    // const [serverTasks, setServerTasks] = useState<Tasks | undefined>(api.task.getAll.useQuery({listId}).data)
+
     const serverTasks = api.task.getAll.useQuery({listId}).data
 
     let tasks = clientTasks.sort((a,b) => a.position - b.position)
     
     if (serverTasks) {
         tasks = [...serverTasks, ...clientTasks].sort((a, b) => a.position - b.position)
-        for(let i = 0; i < tasks.length - 1; i++) {
-            const options = {
-                year: 'numeric',
-                month: 'long',
-                day: 'numeric',
-                hour: 'numeric',
-                minute: 'numeric',
-                second: 'numeric'
-              } as Intl.DateTimeFormatOptions;
+        // for(let i = 0; i < tasks.length - 1; i++) {
+        //     const options = {
+        //         year: 'numeric',
+        //         month: 'long',
+        //         day: 'numeric',
+        //         hour: 'numeric',
+        //         minute: 'numeric',
+        //         second: 'numeric'
+        //       } as Intl.DateTimeFormatOptions;
             
-            if(tasks[i]?.createdAt.toLocaleDateString('en-GB', options) === tasks[i+1]?.createdAt.toLocaleDateString('en-GB', options)) tasks.splice(i, 1)
-        }
+        //     if(tasks[i]?.createdAt.toLocaleDateString('en-GB', options) === tasks[i+1]?.createdAt.toLocaleDateString('en-GB', options)) tasks.splice(i, 1)
+        // }
     }
     return (
         <div className="p-2 min-w-[17rem] h-fit bg-black rounded-xl text-sm relative">
@@ -52,7 +54,8 @@ export default function List({listName, listId}: ListProps) {
             <div className="min-h-2">
                 {tasks.map((task, index) => <Task key={index} taskName={task.name} taskDescription={task.description} listName={listName} />)}
             </div>
-            <AddTask listId={listId} setClientTasks={setClientTasks} numOfTasks={tasks.length} />
+            {/* setClientTasks={setClientTasks} */}
+            <AddTask listId={listId} numOfTasks={tasks.length} setClientTasks={setClientTasks} />
             {showListActions && <ListActions listId={listId} setShowListActions={setShowListActions} />}
         </div>
     )
