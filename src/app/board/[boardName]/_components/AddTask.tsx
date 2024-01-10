@@ -1,5 +1,5 @@
 import { useRouter } from "next/navigation";
-import { useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import { Tasks } from "~/app/types";
 import { api } from "~/trpc/react";
 
@@ -14,10 +14,15 @@ export default function AddTask({listId, numOfTasks, setClientTasks}: AddTaskPro
     const [addTaskClicked, setAddTaskClicked] = useState(false)
     const [taskName, setTaskName] = useState('')
 
+    const taskNameRef = useRef<HTMLTextAreaElement | null>(null)
+
     const createTask = api.task.create.useMutation({
         onSuccess: () => {
             router.refresh()
-            setClientTasks((prev) => [...prev, {id: 3, name: taskName, listId, position: numOfTasks + 1, description: null, createdAt: new Date(), updatedAt: null}])
+            setClientTasks((prev) => {
+                const [heighestId] = prev.sort((a,b) =>  b.id - a.id)
+                return [...prev, {id: (heighestId?.id ?? 0) + 1, name: taskName, listId, position: numOfTasks + 1, description: null, createdAt: new Date(), updatedAt: null}]
+        })
             setTaskName('')
         }
     })
@@ -25,6 +30,7 @@ export default function AddTask({listId, numOfTasks, setClientTasks}: AddTaskPro
     const handleCreateTask = (e: React.FormEvent<HTMLFormElement>) => {
         e.preventDefault()
         createTask.mutate({name: taskName, listId, position: numOfTasks + 1})
+        taskNameRef.current?.select()
     }
 
     const handleTextareaGrowth = (e: React.FormEvent<HTMLTextAreaElement>) => {
@@ -32,12 +38,17 @@ export default function AddTask({listId, numOfTasks, setClientTasks}: AddTaskPro
         e.currentTarget.style.height =  e.currentTarget.scrollHeight + "px"
     }
 
+    useEffect(() => {
+        taskNameRef.current?.select()
+    }, [addTaskClicked])
+
     return (
         <>
         {
             addTaskClicked ? 
             <form className="h-fit bg-black rounded-xl text-sm" onSubmit={(e) => handleCreateTask(e)}>
                 <textarea  
+                    ref={taskNameRef}
                     onInput={(e) => {
                         handleTextareaGrowth(e)
                         setTaskName(e.currentTarget.value)}

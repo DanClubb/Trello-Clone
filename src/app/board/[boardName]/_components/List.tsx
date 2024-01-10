@@ -3,7 +3,7 @@
 import { useSortable } from "@dnd-kit/sortable";
 import { CSS } from "@dnd-kit/utilities";
 import { useRouter } from "next/navigation";
-import { useEffect, useRef, useState } from "react";
+import { useEffect, useState } from "react";
 import Ellipsis from "~/app/_components/Ellipsis";
 import { Lists, Tasks } from "~/app/types";
 import { api } from "~/trpc/react";
@@ -17,30 +17,15 @@ type ListProps = {
 
 export default function List({list}: ListProps) {
     const router = useRouter()
-    const [showListActions, setShowListActions] = useState(false)
-    const [clientTasks, setClientTasks] = useState<Tasks>([])
-    const listRef = useRef<HTMLDivElement | null>(null)
-    // const [serverTasks, setServerTasks] = useState<Tasks | undefined>(api.task.getAll.useQuery({listId}).data)
-
     const serverTasks = api.task.getAll.useQuery({listId: list.id}).data
+    const [showListActions, setShowListActions] = useState(false)
+    const [clientTasks, setClientTasks] = useState<Tasks>(serverTasks ?? [])
 
-    let tasks = clientTasks.sort((a,b) => a.position - b.position)
-    
-    if (serverTasks) {
-        tasks = [...serverTasks, ...clientTasks].sort((a, b) => a.position - b.position)
-        // for(let i = 0; i < tasks.length - 1; i++) {
-        //     const options = {
-        //         year: 'numeric',
-        //         month: 'long',
-        //         day: 'numeric',
-        //         hour: 'numeric',
-        //         minute: 'numeric',
-        //         second: 'numeric'
-        //       } as Intl.DateTimeFormatOptions;
-            
-        //     if(tasks[i]?.createdAt.toLocaleDateString('en-GB', options) === tasks[i+1]?.createdAt.toLocaleDateString('en-GB', options)) tasks.splice(i, 1)
-        // }
-    }
+    const tasks = clientTasks.sort((a,b) => a.position - b.position)
+
+    useEffect(() => {
+        setClientTasks(serverTasks ?? [])
+    }, [serverTasks])
 
     const {
         setNodeRef, 
@@ -75,13 +60,13 @@ export default function List({list}: ListProps) {
         <div 
             ref={setNodeRef}
             style={style} 
-            className="p-2 min-w-[17rem] h-fit bg-black rounded-xl text-sm relative"
+            className="p-2 min-w-[17rem] h-fit bg-neutral-950 rounded-xl text-sm relative"
         >
             <div className="flex items-center mb-1.5">
-                <h3 contentEditable
+                <h3 
                     {...attributes}
                     {...listeners}
-                    className="mr-auto px-3 py-2 w-full font-bold"
+                    className="mr-auto px-3 py-1.5 w-full font-bold"
                 >
                     {list.name}
                 </h3>
@@ -96,8 +81,7 @@ export default function List({list}: ListProps) {
             <div className="min-h-2">
                 {tasks.map((task, index) => <Task key={index} taskName={task.name} taskDescription={task.description} listName={list.name} />)}
             </div>
-            {/* setClientTasks={setClientTasks} */}
-            <AddTask listId={list.id} numOfTasks={tasks.length} setClientTasks={setClientTasks} />
+            <AddTask listId={list.id} numOfTasks={tasks?.length} setClientTasks={setClientTasks} />
             {showListActions && <ListActions listId={list.id} setShowListActions={setShowListActions} />}
         </div>
     )
