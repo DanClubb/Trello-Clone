@@ -56,6 +56,7 @@ export const tasks = mysqlTable("tasks", {
   id: bigint("id", { mode: "number" }).primaryKey().autoincrement(),
   name: varchar("name", { length: 255 }).notNull(),
   listId: int("list_id").notNull(),
+  description: varchar("description", { length: 255 }),
   position: int("position").notNull(),
   createdAt: timestamp("created_at")
       .default(sql`CURRENT_TIMESTAMP`)

@@ -4,6 +4,7 @@ import {
   type DefaultSession,
   type NextAuthOptions,
 } from "next-auth";
+import type { Adapter } from 'next-auth/adapters';
 import DiscordProvider from "next-auth/providers/discord";
 import GoogleProvider from "next-auth/providers/google";
 
@@ -47,8 +48,8 @@ export const authOptions: NextAuthOptions = {
       },
     }),
   },
-  // @ts-expect-error-next-line
-  adapter: DrizzleAdapter(db, mysqlTable),
+  
+  adapter: DrizzleAdapter(db, mysqlTable) as Adapter,
   providers: [
     DiscordProvider({
       clientId: env.DISCORD_CLIENT_ID,
@@ -57,7 +58,7 @@ export const authOptions: NextAuthOptions = {
     GoogleProvider({
       clientId: env.GOOGLE_CLIENT_ID,
       clientSecret: env.GOOGLE_CLIENT_SECRET
-    })
+    }) 
     /**
      * ...add more providers here.
      *

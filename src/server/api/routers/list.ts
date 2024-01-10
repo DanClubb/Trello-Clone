@@ -27,6 +27,13 @@ export const listRouter = createTRPCRouter({
         });
       }),
 
+    updatePosition: protectedProcedure
+    .input(z.object({ listId: z.number(), position: z.number() }))
+    .mutation(async ({ ctx, input }) => {
+      await ctx.db.update(lists).set({ position: input.position })
+      .where(eq(lists.id, input.listId));
+    }),
+
     delete: protectedProcedure
     .input(z.object({ listId: z.number() }))
     .mutation(async ({ ctx, input }) => {

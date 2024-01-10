@@ -1,22 +1,28 @@
-"use client"
-
 import { useRouter } from "next/navigation"
-import { useState } from "react"
+import { useEffect, useRef, useState } from "react"
+import { Lists } from "~/app/types"
 import { api } from "~/trpc/react"
 
 type AddListProps = {
     boardId: number;
     numOfLists: number;
+    setClientLists: React.Dispatch<React.SetStateAction<Lists[]>>
 }
 
-export default function AddList({boardId, numOfLists}: AddListProps) {
+export default function AddList({boardId, numOfLists, setClientLists}: AddListProps) {
     const router = useRouter()
     const [addListClicked, setAddListClicked] = useState(false)
     const [listName, setListName] = useState('')
 
+    const listNameRef = useRef<HTMLInputElement | null>(null)
+
     const createList = api.list.create.useMutation({
         onSuccess: () => {
             router.refresh()
+            setClientLists((prev) => {
+                const [heighestId] = prev.sort((a,b) =>  b.id - a.id)
+                return [...prev, {id: (heighestId?.id ?? 0) + 1, name: listName, boardId, position: numOfLists + 1, description: null, createdAt: new Date(), updatedAt: null}]
+            })
             setAddListClicked(false)
         }
     })
@@ -26,12 +32,18 @@ export default function AddList({boardId, numOfLists}: AddListProps) {
         createList.mutate({name: listName, boardId: boardId, position: numOfLists+1})
     }
 
+    useEffect(() => {
+        listNameRef.current?.focus()
+        listNameRef.current?.select()
+    }, [addListClicked])
+
     return (
         <>
         {
             addListClicked ? 
                 <form className="p-2 min-w-[17rem] h-fit bg-black rounded-xl text-sm" onSubmit={(e) => handleCreateList(e)}>
                     <input 
+                        ref={listNameRef}
                         type="text" 
                         onChange={(e) => setListName(e.target.value)}
                         className="mb-2 px-3 py-2 w-full bg-transparent rounded outline-none ring-2 ring-inset ring-transparent transition hover:bg-gray-800 hover:ring-lightgray focus:bg-transparent focus:ring-skyblue" 
