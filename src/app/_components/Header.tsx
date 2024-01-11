@@ -30,7 +30,7 @@ export default function Header({session}: HeaderProps) {
                 >
                     Create
                 </button>
-                <div>
+                <div className="ml-auto">
                     <SignInOutButton session={session} />
                 </div>
             </nav>
