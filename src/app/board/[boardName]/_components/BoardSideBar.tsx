@@ -18,7 +18,7 @@ export default  function BoardSideBar({boardName}: BoardNavProps) {
     return (
         <div className={`pt-3 min-h-screen ${sideBarViewToggle ? 'min-w-64 w-64' : 'min-w-8 w-8 delay-150'} transition-all duration-500 relative`}>
             <Image 
-                className={`ml-auto cursor-pointer ${!sideBarViewToggle && '-mr-2 bg-black rounded-full rotate-180'} transition-all duration-300 hover:bg-white/[0.3]`}
+                className={`ml-auto cursor-pointer rounded ${!sideBarViewToggle && '-mr-2 bg-black rounded-full rotate-180'} transition-all duration-300 hover:bg-white/[0.3]`}
                 src={arrow as StaticImport} 
                 width={28} 
                 height={28} 
