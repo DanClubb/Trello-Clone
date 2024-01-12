@@ -5,8 +5,13 @@ import Link from "next/link"
 import { useState } from "react"
 import logo from "../../../public/icon.png"
 import CreateBoardModal from "./CreateBoardModal"
+import SignInOutButton from "./SignInOutButton"
 
-export default function Header() {
+type HeaderProps = {
+    session: boolean
+}
+
+export default function Header({session}: HeaderProps) {
     const [showCreateBoardModal, setShowCreateBoardModal] = useState(false)
     return (
         <header>
@@ -25,6 +30,9 @@ export default function Header() {
                 >
                     Create
                 </button>
+                <div className="ml-auto">
+                    <SignInOutButton session={session} />
+                </div>
             </nav>
             {
                 showCreateBoardModal && <CreateBoardModal setShowModal={setShowCreateBoardModal} />
