@@ -6,7 +6,7 @@ import { api } from "~/trpc/react";
 type AddTaskProps = {
     listId: number;
     numOfTasks: number;
-    setClientTasks: React.Dispatch<React.SetStateAction<Tasks>>
+    setClientTasks: React.Dispatch<React.SetStateAction<Tasks[]>>
 }
 
 export default function AddTask({listId, numOfTasks, setClientTasks}: AddTaskProps) {

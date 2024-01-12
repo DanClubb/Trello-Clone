@@ -1,6 +1,4 @@
-"use client"
-
-import { useSortable } from "@dnd-kit/sortable";
+import { SortableContext, useSortable } from "@dnd-kit/sortable";
 import { CSS } from "@dnd-kit/utilities";
 import { useRouter } from "next/navigation";
 import { useEffect, useState } from "react";
@@ -13,19 +11,21 @@ import Task from "./Task";
 
 type ListProps = {
     list: Lists
+    tasks: Tasks[];
+    setClientTasks: React.Dispatch<React.SetStateAction<Tasks[]>>;
+    overlayStyle?: string
 }
 
-export default function List({list}: ListProps) {
+export default function List({list, tasks, setClientTasks, overlayStyle}: ListProps) {
     const router = useRouter()
-    const serverTasks = api.task.getAll.useQuery({listId: list.id}).data
     const [showListActions, setShowListActions] = useState(false)
-    const [clientTasks, setClientTasks] = useState<Tasks>(serverTasks ?? [])
+    const [currentListTasks, setCurrentListTasks] = useState(tasks)
 
-    const tasks = clientTasks.sort((a,b) => a.position - b.position)
+    const taskIds = tasks.map((task) => task.id)
 
     useEffect(() => {
-        setClientTasks(serverTasks ?? [])
-    }, [serverTasks])
+        setCurrentListTasks(tasks?.filter((task) => task.listId === list.id).sort((a,b) => a.position - b.position) ?? [])
+    }, [tasks])
 
     const {
         setNodeRef, 
@@ -46,6 +46,7 @@ export default function List({list}: ListProps) {
         transition, 
         transform: CSS.Translate.toString(transform),
     }
+    
     if (isDragging) {
         return (
         <div 
@@ -60,7 +61,7 @@ export default function List({list}: ListProps) {
         <div 
             ref={setNodeRef}
             style={style} 
-            className="p-2 min-w-[17rem] h-fit bg-neutral-950 rounded-xl text-sm relative"
+            className={`p-2 min-w-[17rem] h-fit bg-neutral-950 rounded-xl text-sm relative ${overlayStyle}`}
         >
             <div className="flex items-center mb-1.5">
                 <h3 
@@ -79,9 +80,12 @@ export default function List({list}: ListProps) {
             </div>
             
             <div className="min-h-2">
-                {tasks.map((task, index) => <Task key={index} taskName={task.name} taskDescription={task.description} listName={list.name} />)}
+                <SortableContext items={taskIds}>
+                   {currentListTasks.map((task, index) => <Task key={index} task={task} listName={list.name} />)} 
+                </SortableContext>
+                
             </div>
-            <AddTask listId={list.id} numOfTasks={tasks?.length} setClientTasks={setClientTasks} />
+            <AddTask listId={list.id} numOfTasks={tasks.length} setClientTasks={setCurrentListTasks} />
             {showListActions && <ListActions listId={list.id} setShowListActions={setShowListActions} />}
         </div>
     )
