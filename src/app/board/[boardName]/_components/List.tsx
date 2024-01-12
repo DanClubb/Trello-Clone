@@ -2,7 +2,6 @@
 
 import { useSortable } from "@dnd-kit/sortable";
 import { CSS } from "@dnd-kit/utilities";
-import { useRouter } from "next/navigation";
 import { useEffect, useState } from "react";
 import Ellipsis from "~/app/_components/Ellipsis";
 import { Lists, Tasks } from "~/app/types";
@@ -16,7 +15,6 @@ type ListProps = {
 }
 
 export default function List({list}: ListProps) {
-    const router = useRouter()
     const serverTasks = api.task.getAll.useQuery({listId: list.id}).data
     const [showListActions, setShowListActions] = useState(false)
     const [clientTasks, setClientTasks] = useState<Tasks>(serverTasks ?? [])
