@@ -11,9 +11,7 @@ import {
     useSensors
 } from "@dnd-kit/core";
 import { SortableContext, arrayMove } from "@dnd-kit/sortable";
-import { ExecutedQuery } from "@planetscale/database";
 import { useRouter } from "next/navigation";
-import { list } from "postcss";
 import { useEffect, useMemo, useState } from "react";
 import { api } from "~/trpc/react";
 import { Lists, Tasks } from "../../../types";
@@ -47,11 +45,12 @@ export default function BoardContent({boardId}: BoardContentProps) {
 
     useEffect(() => {
         setClientLists(serverLists?.sort((a,b) => a.position - b.position) ?? [])
+        console.log("lists => ", serverLists)
         const tasks = serverTasks?.map(task => task.tasks)
         setClientTasks(tasks ?? [])
         
         
-    }, [serverLists, clientTasks])
+    }, [serverLists, serverTasks])
  
     const sensors = useSensors(
         useSensor(PointerSensor, {
@@ -133,7 +132,7 @@ export default function BoardContent({boardId}: BoardContentProps) {
                 }}
             >
                 {draggedList && <List list={draggedList} tasks={clientTasks} setClientTasks={setClientTasks} overlayStyle="opacity-95 rotate-6" />}
-                {draggedTask && <Task listName="" task={draggedTask} overlayStyle="opacity-95 rotate-6" />}
+                {draggedTask && <Task listName="" task={draggedTask} overlayStyle="opacity-90 rotate-6" />}
             </DragOverlay>
         </DndContext>
         

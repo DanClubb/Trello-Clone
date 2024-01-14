@@ -18,12 +18,12 @@ export default function AddList({boardId, numOfLists, setClientLists}: AddListPr
 
     const createList = api.list.create.useMutation({
         onSuccess: () => {
-            router.refresh()
             setClientLists((prev) => {
                 const [heighestId] = prev.sort((a,b) =>  b.id - a.id)
                 return [...prev, {id: (heighestId?.id ?? 0) + 1, name: listName, boardId, position: numOfLists + 1, description: null, createdAt: new Date(), updatedAt: null}]
             })
             setAddListClicked(false)
+            router.refresh
         }
     })
 

@@ -22,6 +22,7 @@ export default function List({list, tasks, setClientTasks, overlayStyle}: ListPr
     const [currentListTasks, setCurrentListTasks] = useState(tasks)
 
     const taskIds = tasks.map((task) => task.id)
+    // const taskIds = [] as Tasks[]
 
     useEffect(() => {
         setCurrentListTasks(tasks?.filter((task) => task.listId === list.id).sort((a,b) => a.position - b.position) ?? [])
