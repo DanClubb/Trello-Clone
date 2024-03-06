@@ -4,12 +4,11 @@ import { Tasks } from "~/app/types";
 import { api } from "~/trpc/react";
 
 type AddTaskProps = {
-    listId: number;
+    listId?: number;
     numOfTasks: number;
-    setClientTasks: React.Dispatch<React.SetStateAction<Tasks[]>>
 }
 
-export default function AddTask({listId, numOfTasks, setClientTasks}: AddTaskProps) {
+export default function AddTask({listId, numOfTasks}: AddTaskProps) {
     const router = useRouter();
     const [addTaskClicked, setAddTaskClicked] = useState(false)
     const [taskName, setTaskName] = useState('')
@@ -19,17 +18,13 @@ export default function AddTask({listId, numOfTasks, setClientTasks}: AddTaskPro
     const createTask = api.task.create.useMutation({
         onSuccess: () => {
             router.refresh()
-            setClientTasks((prev) => {
-                const [heighestId] = prev.sort((a,b) =>  b.id - a.id)
-                return [...prev, {id: (heighestId?.id ?? 0) + 1, name: taskName, listId, position: numOfTasks + 1, description: null, createdAt: new Date(), updatedAt: null}]
-        })
             setTaskName('')
         }
     })
 
     const handleCreateTask = (e: React.FormEvent<HTMLFormElement>) => {
         e.preventDefault()
-        createTask.mutate({name: taskName, listId, position: numOfTasks + 1})
+        createTask.mutate({name: taskName, listId: listId ?? 1, position: numOfTasks + 1})
         taskNameRef.current?.select()
     }
 

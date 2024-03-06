@@ -2,7 +2,7 @@ import { useRouter } from "next/navigation";
 import { api } from "~/trpc/react";
 
 type ListActionsProps = {
-    listId: number;
+    listId?: number;
     setShowListActions: React.Dispatch<React.SetStateAction<boolean>>
 }
 
@@ -21,7 +21,7 @@ export default function ListActions({listId, setShowListActions}: ListActionsPro
                 <button className="w-6 h-6 absolute right-2" onClick={() => setShowListActions(false)}>x</button>
             </header>
             
-            <button className="w-full text-red-400" onClick={() => deleteList.mutate({listId})}>Delete list</button>
+            <button className="w-full text-red-400" onClick={() => deleteList.mutate({listId: listId ?? 1})}>Delete list</button>
         </div>
     )
 }
