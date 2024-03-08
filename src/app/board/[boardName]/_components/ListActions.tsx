@@ -12,6 +12,7 @@ export default function ListActions({listId, setShowListActions}: ListActionsPro
     const deleteList = api.list.delete.useMutation({
         onSuccess: () => {
             router.refresh()
+            setShowListActions(false)
         }
     })
     return (

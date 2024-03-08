@@ -63,7 +63,7 @@ export default function AddTask({listId, numOfTasks}: AddTaskProps) {
                 className="px-3 py-2 w-full rounded text-left hover:bg-slate-300/[0.3] transition"
                 onClick={() => setAddTaskClicked(true)}
             >
-                {createTask.isLoading ? '...Loading' : '+ Add a card'}
+                + Add a card
             </button>
         }
         </>

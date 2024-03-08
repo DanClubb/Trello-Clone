@@ -10,10 +10,9 @@ import Task from "./Task";
 type ListProps = {
     list: Lists | undefined
     tasks?: Tasks[];
-    overlayStyle?: string
 }
 
-export default function List({list, tasks, overlayStyle}: ListProps) {
+export default function List({list, tasks}: ListProps) {
     const [showListActions, setShowListActions] = useState(false)
 
     const currentListTasks = tasks?.filter((task) => task.listId === list?.id).sort((a,b) => a.position - b.position)
@@ -21,7 +20,7 @@ export default function List({list, tasks, overlayStyle}: ListProps) {
 
     return (
         <div 
-            className={`p-2 min-w-[17rem] h-fit bg-neutral-950 rounded-xl text-sm relative ${overlayStyle}`}
+            className={`p-2 min-w-[17rem] h-fit bg-neutral-950 rounded-xl text-sm relative`}
         >
             <div className="flex items-center mb-1.5">
                 <h3 
