@@ -15,4 +15,4 @@ export type Tasks = {
     position: number;
     listId: number;
     description: string | null;
-}[]
+}

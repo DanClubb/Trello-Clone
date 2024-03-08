@@ -15,11 +15,9 @@ export default function CreateBoardModal({setShowModal}: CreateBoardModalProps) 
 
     const createBoard = api.board.createBoard.useMutation({
         onSuccess: async () => {
+            router.push(`/board/${boardTitle.split(' ').join('-').toLowerCase()}`)
             router.refresh()
-            setTimeout(() => {
-              router.replace(`/board/${boardTitle.split(' ').join('-').toLowerCase()}`)
-              setShowModal(false)  
-            }, 350)
+            setShowModal(false)  
         }
     })
 

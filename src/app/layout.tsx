@@ -21,10 +21,10 @@ export default async function RootLayout({
   const session = await getServerAuthSession();
   return (
     <html lang="en">
-      <body className={`flex flex-col font-mono overflow-hidden bg-darkgray text-lightblue`}>
+      <body className={`flex flex-col overflow-hidden bg-darkgray text-lightblue`}>
         <TRPCReactProvider cookies={cookies().toString()}>
-          <Header session={session ? true : false} />
-          {children}
+            <Header session={session ? true : false} />
+            {children}
         </TRPCReactProvider>
       </body>
     </html>
