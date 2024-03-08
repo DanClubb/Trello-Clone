@@ -57,7 +57,7 @@ export default function AddList({boardId, numOfLists}: AddListProps) {
                     className="px-4 py-3 min-w-[17rem] h-fit bg-slate-200/[0.3] rounded-xl text-white text-sm text-left hover:bg-slate-400/[0.4]"
                     onClick={() => setAddListClicked(true)}   
                 >
-                    + Add a list
+                    + {numOfLists > 0 ? 'Add another list':'Add a list'}
                 </button>
         }
         </>
