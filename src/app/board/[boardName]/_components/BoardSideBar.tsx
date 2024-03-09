@@ -39,8 +39,7 @@ export default  function BoardSideBar({boardName}: BoardNavProps) {
                         </Link>
                     ))
                 }
-            </div>
-            
+            </div> 
         </div>
     )
 }

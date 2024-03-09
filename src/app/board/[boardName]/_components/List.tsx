@@ -15,7 +15,8 @@ type ListProps = {
 export default function List({list, tasks}: ListProps) {
     const [showListActions, setShowListActions] = useState(false)
 
-    const currentListTasks = tasks?.filter((task) => task.listId === list?.id).sort((a,b) => a.position - b.position)
+    // tasks prop has all tasks for the current board so filter the tasks just for the current list
+    const currentListTasks = tasks?.filter((task) => task.listId === list?.id)
 
 
     return (
@@ -45,4 +46,3 @@ export default function List({list, tasks}: ListProps) {
         </div>
     )
 }
-
