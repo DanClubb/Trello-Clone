@@ -1,5 +1,6 @@
 import { useRouter } from "next/navigation";
 import { useEffect, useRef, useState } from "react";
+import Close from "~/app/_icons/Close";
 import { Tasks } from "~/app/types";
 import { api } from "~/trpc/react";
 
@@ -52,9 +53,11 @@ export default function AddTask({listId, numOfTasks}: AddTaskProps) {
                     className="block resize-none mb-2 px-3 pt-3 pb-7 w-full max-h-40 bg-charcoal rounded-lg text-xs leading-5 outline-none transition overflow-y-auto" 
                     placeholder="Enter a title for this card..." 
                 ></textarea>
-                <div className="flex items-center gap-4">
+                <div className="flex items-center gap-1.5">
                     <button type="submit" className="px-3 p-1.5 bg-skyblue rounded text-slate-900 hover:bg-blue-300 transition">Add card</button>
-                    <button onClick={() => setAddTaskClicked(false)}>x</button>
+                    <button className="p-1.5 rounded hover:bg-white/[0.2]" onClick={() => setAddTaskClicked(false)}>
+                        <Close />
+                    </button>
                 </div>
             </form>
             :

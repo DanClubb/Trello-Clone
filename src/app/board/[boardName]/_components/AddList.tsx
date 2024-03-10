@@ -2,6 +2,7 @@
 
 import { useRouter } from "next/navigation"
 import { useEffect, useRef, useState } from "react"
+import Close from "~/app/_icons/Close"
 import { Lists } from "~/app/types"
 import { api } from "~/trpc/react"
 
@@ -47,9 +48,11 @@ export default function AddList({boardId, numOfLists}: AddListProps) {
                         className="mb-2 px-3 py-2 w-full bg-transparent rounded outline-none ring-2 ring-inset ring-transparent transition hover:bg-gray-800 hover:ring-lightgray focus:bg-transparent focus:ring-skyblue" 
                         placeholder="Enter list title..." 
                     />
-                    <div className="flex items-center gap-4">
-                        <button type="submit" className="px-3 p-1.5 bg-skyblue rounded text-slate-900 hover:bg-blue-300 transition">Add list</button>
-                        <button onClick={() => setAddListClicked(false)}>x</button>
+                    <div className="flex items-center gap-1.5">
+                        <button type="submit" className="px-3 py-1.5 bg-skyblue rounded text-slate-900 hover:bg-blue-300 transition">Add list</button>
+                        <button className="p-1.5 rounded hover:bg-white/[0.2]" onClick={() => setAddListClicked(false)}>
+                            <Close />
+                        </button>
                     </div>
                 </form>
                 :
