@@ -1,5 +1,5 @@
 import { useRouter } from "next/navigation";
-import { useEffect, useRef, useState } from "react";
+import React, { useEffect, useRef, useState } from "react";
 import { api } from "~/trpc/react";
 import Close from "../_icons/Close";
 
@@ -37,8 +37,8 @@ export default function CreateBoardModal({showModal, setShowModal}: CreateBoardM
     }, [])
 
     useEffect(() => {
-        const offClickHandler = (e:any) => {
-            if(!createBoardModalRef.current?.contains(e.target)) {
+        const offClickHandler = (e: MouseEvent) => {
+            if(!createBoardModalRef.current?.contains(e.target as Node)) {
                 setShowModal(false)
             }
         }

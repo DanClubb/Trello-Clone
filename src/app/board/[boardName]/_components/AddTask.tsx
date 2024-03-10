@@ -39,8 +39,8 @@ export default function AddTask({listId, numOfTasks}: AddTaskProps) {
     useEffect(() => {
         taskNameRef.current?.select()
 
-        const offClickHandler = (e:any) => {
-            if(!addTaskRef.current?.contains(e.target)) {
+        const offClickHandler = (e: MouseEvent) => {
+            if(!addTaskRef.current?.contains(e.target as Node)) {
                 setAddTaskClicked(false)
             }
         }

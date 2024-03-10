@@ -32,8 +32,8 @@ export default function AddList({boardId, numOfLists}: AddListProps) {
         listNameRef.current?.focus()
         listNameRef.current?.select()
 
-        const offClickHandler = (e:any) => {
-            if(!addListRef.current?.contains(e.target)) {
+        const offClickHandler = (e: MouseEvent) => {
+            if(!addListRef.current?.contains(e.target as Node)) {
                 setAddListClicked(false)
             }
         }

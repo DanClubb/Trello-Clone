@@ -36,8 +36,8 @@ export default function CreateBoardModal({taskName, taskDescription, listName, s
     }
 
     useEffect(() => {
-        const offClickHandler = (e:any) => {
-            if(!taskModalRef.current?.contains(e.target)) {
+        const offClickHandler = (e: MouseEvent) => {
+            if(!taskModalRef.current?.contains(e.target as Node)) {
                 setShowModal(false)
             }
         }

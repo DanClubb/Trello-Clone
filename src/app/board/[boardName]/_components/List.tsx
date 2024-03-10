@@ -42,7 +42,7 @@ export default function List({list, tasks}: ListProps) {
                 
             </div>
             <AddTask listId={list?.id} numOfTasks={tasks?.length ?? 0} />
-            {showListActions && <ListActions listId={list?.id} setShowListActions={setShowListActions} />}
+            {showListActions && <ListActions listId={list?.id} showListActions={showListActions} setShowListActions={setShowListActions} />}
         </div>
     )
 }
