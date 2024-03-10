@@ -21,7 +21,7 @@ export default function Task({listName, task}: TaskProps) {
             {task.name}
         </div>
         {
-            taskIsOpen && <TaskModal taskName={task.name} taskDescription={task.description} listName={listName} setShowModal={setTaskIsOpen} />
+            taskIsOpen && <TaskModal taskName={task.name} taskDescription={task.description} listName={listName} showModal={taskIsOpen} setShowModal={setTaskIsOpen} />
         }
         </>
         

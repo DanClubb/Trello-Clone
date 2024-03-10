@@ -18,7 +18,7 @@ export default function CreateBoardCard() {
                 <span className="text-xl">+</span>
             </div> 
             {
-                showCreateBoardModal && <CreateBoardModal setShowModal={setShowCreateBoardModal} />
+                showCreateBoardModal && <CreateBoardModal showModal={showCreateBoardModal} setShowModal={setShowCreateBoardModal} />
             }
         </>
         

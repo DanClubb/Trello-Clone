@@ -1,5 +1,5 @@
 import { useRouter } from "next/navigation";
-import { useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import { api } from "~/trpc/react";
 import Close from "../../../_icons/Close";
 
@@ -7,15 +7,18 @@ type CreateBoardModalProps = {
     taskName: string;
     listName: string;
     taskDescription: string | null;
+    showModal: boolean;
     setShowModal:  React.Dispatch<React.SetStateAction<boolean>>;
 }
 
 // console.log(close)
 
-export default function CreateBoardModal({taskName, taskDescription, listName, setShowModal}: CreateBoardModalProps) {
+export default function CreateBoardModal({taskName, taskDescription, listName, showModal, setShowModal}: CreateBoardModalProps) {
     const router = useRouter()
     const [descriptionOpened, setDescriptionOpened] = useState(false)
     const [description, setDescription] = useState(taskDescription ?? '')
+
+    const taskModalRef = useRef<HTMLDivElement | null>(null)
 
 
     const updateDescription = api.task.updateDecription.useMutation({
@@ -31,9 +34,22 @@ export default function CreateBoardModal({taskName, taskDescription, listName, s
             setDescriptionOpened(false)
         }
     }
+
+    useEffect(() => {
+        const offClickHandler = (e:any) => {
+            if(!taskModalRef.current?.contains(e.target)) {
+                setShowModal(false)
+            }
+        }
+        document.addEventListener("click", offClickHandler)
+
+        return () => {
+            document.removeEventListener('click', offClickHandler)
+        }
+    }, [showModal])
     return (
         <div className="fixed top-0 left-0 z-10 w-full h-full">
-            <div className="px-6 pt-4 pb-8 min-w-[21rem] md:w-[48rem] rounded-xl absolute top-2/4 left-2/4 -translate-y-3/4 -translate-x-1/2 z-20 bg-darkgray">
+            <div ref={taskModalRef} className="px-6 pt-4 pb-8 min-w-[21rem] md:w-[48rem] rounded-xl absolute top-2/4 left-2/4 -translate-y-3/4 -translate-x-1/2 z-20 bg-darkgray">
                 <button className="absolute top-4 right-4 p-2 transition-all hover:bg-lightblue/10 hover:rounded-full" 
                     onClick={() => {
                         setShowModal(false)}}

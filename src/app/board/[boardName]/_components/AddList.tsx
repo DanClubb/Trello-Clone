@@ -16,6 +16,7 @@ export default function AddList({boardId, numOfLists}: AddListProps) {
     const [addListClicked, setAddListClicked] = useState(false)
     const [listName, setListName] = useState('')
 
+    const addListRef = useRef<HTMLFormElement | null>(null)
     const listNameRef = useRef<HTMLInputElement | null>(null)
 
     const createList = api.list.create.useMutation({
@@ -30,13 +31,24 @@ export default function AddList({boardId, numOfLists}: AddListProps) {
     useEffect(() => {
         listNameRef.current?.focus()
         listNameRef.current?.select()
+
+        const offClickHandler = (e:any) => {
+            if(!addListRef.current?.contains(e.target)) {
+                setAddListClicked(false)
+            }
+        }
+        document.addEventListener("click", offClickHandler)
+
+        return () => {
+            document.removeEventListener('click', offClickHandler)
+        }
     }, [addListClicked])
 
     return (
         <>
         {
             addListClicked ? 
-                <form className="p-2 min-w-[17rem] h-fit bg-black rounded-xl text-sm" onSubmit={(e) => {
+                <form ref={addListRef} className="p-2 min-w-[17rem] h-fit bg-black rounded-xl text-sm" onSubmit={(e) => {
                     e.preventDefault() 
                     createList.mutate({boardId, name: listName, position: 1})
                 }}>

@@ -4,13 +4,16 @@ import { api } from "~/trpc/react";
 import Close from "../_icons/Close";
 
 type CreateBoardModalProps = {
+    showModal: boolean;
     setShowModal:  React.Dispatch<React.SetStateAction<boolean>>;
 }
 
-export default function CreateBoardModal({setShowModal}: CreateBoardModalProps) {
+export default function CreateBoardModal({showModal, setShowModal}: CreateBoardModalProps) {
     const router = useRouter()
     const [activeColor, setActiveColor] = useState('bg-red-700')
     const [boardTitle, setBoardTitle] = useState('')
+
+    const createBoardModalRef = useRef<HTMLDivElement | null>(null)
     const boardTitleRef = useRef<HTMLInputElement>(null)
 
     const boardColors = ['bg-red-700', 'bg-sky-700', 'bg-violet-700', 'bg-green-700', 'bg-yellow-700']
@@ -32,9 +35,22 @@ export default function CreateBoardModal({setShowModal}: CreateBoardModalProps) 
         boardTitleRef.current?.focus()
         boardTitleRef.current?.select()
     }, [])
+
+    useEffect(() => {
+        const offClickHandler = (e:any) => {
+            if(!createBoardModalRef.current?.contains(e.target)) {
+                setShowModal(false)
+            }
+        }
+        document.addEventListener("click", offClickHandler)
+
+        return () => {
+            document.removeEventListener('click', offClickHandler)
+        }
+    }, [showModal])
     return (
         <div className="fixed top-0 left-0 z-10 w-full h-full">
-            <div className="w-11/12 sm:w-4/12 rounded-xl absolute top-2/4 left-2/4 -translate-y-3/4 -translate-x-1/2 z-20 bg-darkgray">
+            <div ref={createBoardModalRef} className="w-11/12 sm:w-4/12 rounded-xl absolute top-2/4 left-2/4 -translate-y-3/4 -translate-x-1/2 z-20 bg-darkgray">
                 <button className="block mt-2 mr-2 ml-auto" 
                     onClick={() => {
                         setShowModal(false)}}

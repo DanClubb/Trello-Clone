@@ -14,7 +14,9 @@ export default function AddTask({listId, numOfTasks}: AddTaskProps) {
     const [addTaskClicked, setAddTaskClicked] = useState(false)
     const [taskName, setTaskName] = useState('')
 
+    const addTaskRef = useRef<HTMLFormElement | null>(null)
     const taskNameRef = useRef<HTMLTextAreaElement | null>(null)
+
 
     const createTask = api.task.create.useMutation({
         onSuccess: () => {
@@ -36,13 +38,25 @@ export default function AddTask({listId, numOfTasks}: AddTaskProps) {
 
     useEffect(() => {
         taskNameRef.current?.select()
+
+        const offClickHandler = (e:any) => {
+            if(!addTaskRef.current?.contains(e.target)) {
+                setAddTaskClicked(false)
+            }
+        }
+        document.addEventListener("click", offClickHandler)
+
+        return () => {
+            document.removeEventListener('click', offClickHandler)
+        }
     }, [addTaskClicked])
+
 
     return (
         <>
         {
             addTaskClicked ? 
-            <form className="h-fit bg-black rounded-xl text-sm" onSubmit={(e) => handleCreateTask(e)}>
+            <form className="h-fit bg-black rounded-xl text-sm" onSubmit={(e) => handleCreateTask(e)} ref={addTaskRef}>
                 <textarea  
                     ref={taskNameRef}
                     onInput={(e) => {

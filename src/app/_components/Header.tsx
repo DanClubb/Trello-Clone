@@ -35,7 +35,7 @@ export default function Header({session}: HeaderProps) {
                 </div>
             </nav>
             {
-                showCreateBoardModal && <CreateBoardModal setShowModal={setShowCreateBoardModal} />
+                showCreateBoardModal && <CreateBoardModal showModal={showCreateBoardModal} setShowModal={setShowCreateBoardModal} />
             }
         </header>
     )
