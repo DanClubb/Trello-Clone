@@ -7,16 +7,15 @@ import TaskModal from "./TaskModal";
 type TaskProps = {
     listName: string;
     task: Tasks;
-    overlayStyle?: string;
 }
 
-export default function Task({listName, task, overlayStyle}: TaskProps) {
+export default function Task({listName, task}: TaskProps) {
     const [taskIsOpen, setTaskIsOpen] = useState(false)
   
     return (
         <>
         <div 
-            className={`mb-2 px-3 py-2 w-full max-h-40 bg-charcoal rounded-lg text-xs leading-5 outline-none transition overflow-y-auto ${overlayStyle}`}
+            className={`mb-2.5 px-3 py-2.5 w-full max-h-40 bg-[#22272b] rounded-lg text-s leading-5 outline-none transition overflow-y-auto cursor-pointer transition-all duration-200 hover:outline-blue-300`}
             onClick={() => setTaskIsOpen(true)}
         >
             {task.name}
