@@ -1,6 +1,7 @@
 import { useRouter } from "next/navigation";
 import { useState } from "react";
 import { api } from "~/trpc/react";
+import Close from "../../../_icons/Close";
 
 type CreateBoardModalProps = {
     taskName: string;
@@ -8,6 +9,8 @@ type CreateBoardModalProps = {
     taskDescription: string | null;
     setShowModal:  React.Dispatch<React.SetStateAction<boolean>>;
 }
+
+// console.log(close)
 
 export default function CreateBoardModal({taskName, taskDescription, listName, setShowModal}: CreateBoardModalProps) {
     const router = useRouter()
@@ -31,13 +34,13 @@ export default function CreateBoardModal({taskName, taskDescription, listName, s
     return (
         <div className="fixed top-0 left-0 z-10 w-full h-full">
             <div className="px-6 pt-4 pb-8 min-w-[21rem] md:w-[48rem] rounded-xl absolute top-2/4 left-2/4 -translate-y-3/4 -translate-x-1/2 z-20 bg-darkgray">
-                <button className="block mt-2 mr-2 ml-auto" 
+                <button className="absolute top-4 right-4 p-2 transition-all hover:bg-lightblue/10 hover:rounded-full" 
                     onClick={() => {
                         setShowModal(false)}}
                 >
-                    close
+                    <Close />
                 </button>
-                <p className="mb-2 text-2xl">{taskName}</p>
+                <p className="mt-6 mb-2 text-2xl">{taskName}</p>
                 <p className="text-xs">in list {listName}</p>
                 <form className="mt-6 flex flex-col gap-6" onSubmit={(e) => handleDescriptionUpdate(e)}>
                     <div>

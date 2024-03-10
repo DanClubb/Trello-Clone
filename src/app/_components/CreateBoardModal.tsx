@@ -1,6 +1,7 @@
 import { useRouter } from "next/navigation";
 import { useEffect, useRef, useState } from "react";
 import { api } from "~/trpc/react";
+import Close from "../_icons/Close";
 
 type CreateBoardModalProps = {
     setShowModal:  React.Dispatch<React.SetStateAction<boolean>>;
@@ -8,10 +9,11 @@ type CreateBoardModalProps = {
 
 export default function CreateBoardModal({setShowModal}: CreateBoardModalProps) {
     const router = useRouter()
-    const boardColors = ['bg-red-700', 'bg-sky-700', 'bg-violet-700', 'bg-green-700', 'bg-yellow-700']
     const [activeColor, setActiveColor] = useState('bg-red-700')
     const [boardTitle, setBoardTitle] = useState('')
     const boardTitleRef = useRef<HTMLInputElement>(null)
+
+    const boardColors = ['bg-red-700', 'bg-sky-700', 'bg-violet-700', 'bg-green-700', 'bg-yellow-700']
 
     const createBoard = api.board.createBoard.useMutation({
         onSuccess: async () => {
@@ -37,7 +39,7 @@ export default function CreateBoardModal({setShowModal}: CreateBoardModalProps) 
                     onClick={() => {
                         setShowModal(false)}}
                 >
-                    close
+                    <Close />
                 </button>
                 <h1 className="mb-4 text-xl text-center">Create Board</h1>
                 <form className="flex flex-col gap-6 px-8 py-2" onSubmit={(e) => handleModalSubmit(e)}>
@@ -48,7 +50,7 @@ export default function CreateBoardModal({setShowModal}: CreateBoardModalProps) 
                                 boardColors.map((color, index) => (
                                     <div 
                                         key={index}
-                                        className={`relative flex justify-center items-center w-16 h-10 ${activeColor === color && 'after:bg-white/[0.3] after:w-full after:h-full after:absolute after:z-10' } ${color} text-2xl text-slate-900 cursor-pointer`}
+                                        className={`relative flex justify-center items-center w-16 h-10 ${color} ${activeColor === color && 'after:bg-white/[0.3] after:w-full after:h-full after:absolute after:z-10'} text-2xl text-slate-900 cursor-pointer`}
                                         onClick={() => setActiveColor(color)}
                                     >
                                         {activeColor === color ? <span className="z-20">✔️</span>: ''}
