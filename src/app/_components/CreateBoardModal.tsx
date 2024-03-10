@@ -50,7 +50,7 @@ export default function CreateBoardModal({setShowModal}: CreateBoardModalProps) 
                                 boardColors.map((color, index) => (
                                     <div 
                                         key={index}
-                                        className={`relative flex justify-center items-center w-16 h-10 ${color} ${activeColor === color && 'after:bg-white/[0.3] after:w-full after:h-full after:absolute after:z-10'} text-2xl text-slate-900 cursor-pointer`}
+                                        className={`relative flex justify-center items-center w-16 h-10 ${color} ${activeColor === color && 'after:bg-white/[0.3] after:w-full after:h-full after:absolute after:z-10'} text-2xl text-slate-900 cursor-pointer after:bg-white/[0.3] hover:after:w-full after:h-full after:absolute after:z-10`}
                                         onClick={() => setActiveColor(color)}
                                     >
                                         {activeColor === color ? <span className="z-20">✔️</span>: ''}
