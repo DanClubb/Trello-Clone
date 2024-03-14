@@ -78,7 +78,7 @@ export default function BoardContent({boardId, lists, tasks}: BoardContentProps)
                 duration: 10,
                 easing: 'cubic-bezier(0.18, 0.67, 0.6, 1.22)',
             }}>
-                {draggedList && <List list={draggedList} tasks={tasks} />}
+                {draggedList && <List list={draggedList} tasks={tasks} isOverlay={true} />}
             </DragOverlay>
         </DndContext>
               

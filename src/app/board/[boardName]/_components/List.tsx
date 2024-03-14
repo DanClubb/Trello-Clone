@@ -11,11 +11,13 @@ import Task from "./Task";
 
 type ListProps = {
     list: Lists
-    tasks?: Tasks[];
+    tasks: Tasks[];
+    isOverlay?: boolean
 }
 
-export default function List({list, tasks}: ListProps) {
+export default function List({list, tasks, isOverlay}: ListProps) {
     const [showListActions, setShowListActions] = useState(false)
+    const [dragging, setDragging] = useState(false)
 
 
     // tasks prop has all tasks for the current board so filter the tasks just for the current list
@@ -47,7 +49,11 @@ export default function List({list, tasks}: ListProps) {
         transform: CSS.Translate.toString(transform),
     }
 
+
     if (isDragging) {
+        if(!dragging) {
+            setDragging(true)
+        }
         return (
         <div 
             ref={(element) => {listRef.current = element; setNodeRef(element);}}
@@ -60,8 +66,8 @@ export default function List({list, tasks}: ListProps) {
     return (
         <div 
             ref={(element) => {listRef.current = element; setNodeRef(element);}}
-            style={{...style, rotate: isDragging ? '4deg' : '0'}} 
-            className={`p-2 min-w-[17rem] h-fit bg-neutral-950 rounded-xl text-sm relative`}
+            style={style} 
+            className={`p-2 min-w-[17rem] h-fit bg-neutral-950 rounded-xl text-sm relative ${isOverlay && 'rotate-[5deg] opacity-90'}`}
         >
             <div className="flex items-center mb-1.5">
                 <h3 
