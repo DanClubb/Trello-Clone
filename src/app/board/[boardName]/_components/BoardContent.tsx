@@ -52,10 +52,12 @@ export default function BoardContent({boardId, lists, tasks}: BoardContentProps)
             const draggedListIndex = prev?.findIndex((list) => list.id === draggedListId)
             const overListIndex = prev?.findIndex((list) => list.id === overListId)
 
-            updateListPosition.mutate({listId: draggedListId as number, position: overListIndex + 1})
-            updateListPosition.mutate({listId: overListId as number, position: draggedListIndex + 1})
+            const reorderedList = arrayMove(prev, draggedListIndex, overListIndex)
 
-            return arrayMove(prev, draggedListIndex, overListIndex)
+            reorderedList.forEach((list, idx) => updateListPosition.mutate({listId: list.id, position: idx}))
+            
+
+            return reorderedList
         })
 
     }
@@ -67,7 +69,7 @@ export default function BoardContent({boardId, lists, tasks}: BoardContentProps)
 
     return (
         <DndContext collisionDetection={closestCenter} sensors={sensors} onDragStart={(e) => handleDragStart(e)} onDragEnd={(e) => handleDragEnd(e)}>
-            <div className="flex gap-4 px-3 grow max-h-[calc(100%-6.75rem)] overflow-auto">
+            <div className="flex gap-4 px-3 grow max-h-[calc(100%-6.75rem)] overflow-x-scroll">
                 <SortableContext items={listIds}>
                     {listsCopy.map((list) => (<List key={list.id} list={list} tasks={tasks}/>))}
                 </SortableContext>
