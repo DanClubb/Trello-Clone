@@ -44,7 +44,6 @@ export default function AddList({boardId, numOfLists}: AddListProps) {
         }
     }, [addListClicked])
 
-    console.log(numOfLists)
     return (
         <>
         {

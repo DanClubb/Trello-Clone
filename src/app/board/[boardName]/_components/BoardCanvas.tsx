@@ -8,7 +8,11 @@ type BoardProps = {
 
 export default async function BoardCanvas({boardName}: BoardProps) {
     const [currentBoard] = await api.board.getByTitle.query({name: boardName.split('-').join(' ')})
-    const boardId = currentBoard?.id!
+    if(currentBoard === undefined) {
+        return <h1>Board not found!</h1>
+    }
+
+    const boardId = currentBoard.id
 
     const serverLists = await api.list.getAll.query({boardId})
     const serverTasks = await api.task.getAll.query({boardId})

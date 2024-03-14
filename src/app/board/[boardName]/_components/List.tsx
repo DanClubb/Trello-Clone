@@ -2,7 +2,7 @@
 
 import { useSortable } from "@dnd-kit/sortable";
 import { CSS } from "@dnd-kit/utilities";
-import { useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import Ellipsis from "~/app/_components/Ellipsis";
 import { Lists, Tasks } from "~/app/types";
 import AddTask from "./AddTask";
@@ -17,10 +17,11 @@ type ListProps = {
 export default function List({list, tasks}: ListProps) {
     const [showListActions, setShowListActions] = useState(false)
 
+
     // tasks prop has all tasks for the current board so filter the tasks just for the current list
     const currentListTasks = tasks?.filter((task) => task.listId === list?.id)
 
-    console.log(list.position)
+    const listRef = useRef<HTMLDivElement | null>(null)
 
     const {
         setNodeRef, 
@@ -34,18 +35,23 @@ export default function List({list, tasks}: ListProps) {
         data: {
             type: "list",
             list
-        }
+        },
+        transition: {
+            duration: 100,
+            easing: 'cubic-bezier(0.25, 1, 0.5, 1)',
+          },
     })
 
     const style = {
         transition, 
         transform: CSS.Translate.toString(transform),
     }
+
     if (isDragging) {
         return (
         <div 
-            ref={setNodeRef} 
-            style={{...style, height: 102}} 
+            ref={(element) => {listRef.current = element; setNodeRef(element);}}
+            style={{...style, height: listRef.current?.scrollHeight}} 
             className="p-2 min-w-[17rem] h-fit bg-black/[0.2] rounded-xl text-sm relative"
         ></div>
         )
@@ -53,8 +59,8 @@ export default function List({list, tasks}: ListProps) {
 
     return (
         <div 
-            ref={setNodeRef}
-            style={style} 
+            ref={(element) => {listRef.current = element; setNodeRef(element);}}
+            style={{...style, rotate: isDragging ? '4deg' : '0'}} 
             className={`p-2 min-w-[17rem] h-fit bg-neutral-950 rounded-xl text-sm relative`}
         >
             <div className="flex items-center mb-1.5">

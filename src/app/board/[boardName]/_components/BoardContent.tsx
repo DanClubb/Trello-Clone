@@ -1,6 +1,6 @@
 "use client"
 
-import { DndContext, DragEndEvent, DragOverlay, DragStartEvent, PointerSensor, useSensor, useSensors } from "@dnd-kit/core";
+import { DndContext, DragEndEvent, DragOverlay, DragStartEvent, PointerSensor, closestCenter, closestCorners, useSensor, useSensors } from "@dnd-kit/core";
 import { SortableContext, arrayMove } from "@dnd-kit/sortable";
 import { useRouter } from "next/navigation";
 import { useEffect, useState } from "react";
@@ -66,15 +66,18 @@ export default function BoardContent({boardId, lists, tasks}: BoardContentProps)
     }, [lists])
 
     return (
-        <DndContext sensors={sensors} onDragStart={(e) => handleDragStart(e)} onDragEnd={(e) => handleDragEnd(e)}>
+        <DndContext collisionDetection={closestCenter} sensors={sensors} onDragStart={(e) => handleDragStart(e)} onDragEnd={(e) => handleDragEnd(e)}>
             <div className="flex gap-4 px-3 grow max-h-[calc(100%-6.75rem)] overflow-auto">
                 <SortableContext items={listIds}>
-                    {listsCopy.map((list, index) => (<List key={index} list={list} tasks={tasks}/>))}
+                    {listsCopy.map((list) => (<List key={list.id} list={list} tasks={tasks}/>))}
                 </SortableContext>
                 
                 <AddList boardId={boardId} numOfLists={lists?.length ?? 0} />
             </div> 
-            <DragOverlay>
+            <DragOverlay dropAnimation={{
+                duration: 10,
+                easing: 'cubic-bezier(0.18, 0.67, 0.6, 1.22)',
+            }}>
                 {draggedList && <List list={draggedList} tasks={tasks} />}
             </DragOverlay>
         </DndContext>
