@@ -1,6 +1,7 @@
 "use client"
 
-import { useSortable } from "@dnd-kit/sortable";
+import { DragOverlay } from "@dnd-kit/core";
+import { SortableContext, useSortable } from "@dnd-kit/sortable";
 import { CSS } from "@dnd-kit/utilities";
 import { useEffect, useRef, useState } from "react";
 import Ellipsis from "~/app/_components/Ellipsis";
@@ -17,11 +18,11 @@ type ListProps = {
 
 export default function List({list, tasks, isOverlay}: ListProps) {
     const [showListActions, setShowListActions] = useState(false)
-    const [dragging, setDragging] = useState(false)
-
 
     // tasks prop has all tasks for the current board so filter the tasks just for the current list
     const currentListTasks = tasks?.filter((task) => task.listId === list?.id)
+
+    const taskIds =  currentListTasks.map(task => task.id);
 
     const listRef = useRef<HTMLDivElement | null>(null)
 
@@ -51,9 +52,6 @@ export default function List({list, tasks, isOverlay}: ListProps) {
 
 
     if (isDragging) {
-        if(!dragging) {
-            setDragging(true)
-        }
         return (
         <div 
             ref={(element) => {listRef.current = element; setNodeRef(element);}}
@@ -86,9 +84,11 @@ export default function List({list, tasks, isOverlay}: ListProps) {
             </div>
             
             <div className="min-h-2">
-                   {currentListTasks?.map((task, index) => <Task key={index} task={task} listName={list?.name ?? ''} />)} 
-                
+                <SortableContext items={taskIds}>
+                    {currentListTasks?.map((task) => <Task key={task.id} task={task} listName={list?.name ?? ''} />)}
+                </SortableContext>
             </div>
+
             <AddTask listId={list?.id} numOfTasks={tasks?.length ?? 0} />
             {showListActions && <ListActions listId={list?.id} showListActions={showListActions} setShowListActions={setShowListActions} />}
         </div>
