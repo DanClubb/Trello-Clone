@@ -124,7 +124,7 @@ export default function BoardContent({boardId, lists, tasks}: BoardContentProps)
     }, [tasks])
 
     return (
-        <DndContext collisionDetection={closestCenter} sensors={sensors} onDragStart={(e) => handleDragStart(e)} onDragEnd={(e) => handleDragEnd(e)} onDragOver={handleDragOver}>
+        <DndContext sensors={sensors} onDragStart={(e) => handleDragStart(e)} onDragEnd={(e) => handleDragEnd(e)} onDragOver={handleDragOver}>
             <div className="flex gap-4 px-3 grow max-h-[calc(100%-6.75rem)] overflow-x-scroll">
                 <SortableContext items={listIds}>
                     {listsClientCopy.map((list) => (<List key={list.id} list={list} tasks={tasksClientCopy}/>))}
