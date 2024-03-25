@@ -37,10 +37,10 @@ export default function AddList({boardId, numOfLists}: AddListProps) {
                 setAddListClicked(false)
             }
         }
-        document.addEventListener("click", offClickHandler)
+        document.addEventListener("mousedown", offClickHandler)
 
         return () => {
-            document.removeEventListener('click', offClickHandler)
+            document.removeEventListener('mousedown', offClickHandler)
         }
     }, [addListClicked])
 
@@ -50,7 +50,7 @@ export default function AddList({boardId, numOfLists}: AddListProps) {
             addListClicked ? 
                 <form ref={addListRef} className="p-2 min-w-[17rem] h-fit bg-black rounded-xl text-sm" onSubmit={(e) => {
                     e.preventDefault() 
-                    createList.mutate({boardId, name: listName, position: 1})
+                    createList.mutate({boardId, name: listName, position: numOfLists + 1})
                 }}>
                     <input 
                         ref={listNameRef}

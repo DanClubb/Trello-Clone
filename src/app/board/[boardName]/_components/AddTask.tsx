@@ -44,10 +44,10 @@ export default function AddTask({listId, numOfTasks}: AddTaskProps) {
                 setAddTaskClicked(false)
             }
         }
-        document.addEventListener("click", offClickHandler)
+        document.addEventListener("mousedown", offClickHandler)
 
         return () => {
-            document.removeEventListener('click', offClickHandler)
+            document.removeEventListener('mousedown', offClickHandler)
         }
     }, [addTaskClicked])
 
