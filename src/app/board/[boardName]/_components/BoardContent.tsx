@@ -33,12 +33,7 @@ export default function BoardContent({boardId, lists, tasks}: BoardContentProps)
             activationConstraint: {
                 distance: 1
             }
-        }),
-        useSensor(TouchSensor, {
-            activationConstraint: {
-              distance: 1
-            },
-          })
+        })
     )
 
     const handleDragStart = (e: DragStartEvent) => {
