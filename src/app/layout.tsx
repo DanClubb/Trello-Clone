@@ -2,9 +2,16 @@ import "~/styles/globals.css";
 
 import { cookies } from "next/headers";
 
+import type { Viewport } from 'next';
 import { getServerAuthSession } from "~/server/auth";
 import { TRPCReactProvider } from "~/trpc/react";
 import Header from "./_components/Header";
+ 
+export const viewport: Viewport = {
+  width: 'device-width',
+  initialScale: 1,
+  maximumScale: 1,
+}
 
 export const metadata = {
   title: "Drello",
