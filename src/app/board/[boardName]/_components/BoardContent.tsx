@@ -36,8 +36,7 @@ export default function BoardContent({boardId, lists, tasks}: BoardContentProps)
         }),
         useSensor(TouchSensor, {
             activationConstraint: {
-              delay: 250,
-              tolerance: 5,
+              distance: 1
             },
           })
     )
