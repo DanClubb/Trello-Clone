@@ -1,6 +1,6 @@
 "use client"
 
-import { DndContext, DragEndEvent, DragOverEvent, DragOverlay, DragStartEvent, PointerSensor, closestCenter, closestCorners, useSensor, useSensors } from "@dnd-kit/core";
+import { DndContext, DragEndEvent, DragOverEvent, DragOverlay, DragStartEvent, PointerSensor, TouchSensor, useSensor, useSensors } from "@dnd-kit/core";
 import { SortableContext, arrayMove } from "@dnd-kit/sortable";
 import { useRouter } from "next/navigation";
 import { useEffect, useState } from "react";
@@ -33,7 +33,13 @@ export default function BoardContent({boardId, lists, tasks}: BoardContentProps)
             activationConstraint: {
                 distance: 1
             }
-        })
+        }),
+        useSensor(TouchSensor, {
+            activationConstraint: {
+              delay: 250,
+              tolerance: 5,
+            },
+          })
     )
 
     const handleDragStart = (e: DragStartEvent) => {
