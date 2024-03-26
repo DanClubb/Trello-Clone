@@ -20,11 +20,7 @@ export default function Header({session}: HeaderProps) {
                     <Image src={logo} alt="logo" width={25} height={25} /> 
                     <h1 className="font-extrabold text-xl">Drello</h1>
                 </Link>
-                <ul className="flex items-center gap-8">
-                    <li>Recent ▼</li>
-                    <li>Starred ▼</li>
-                </ul>
-                <button 
+                <button
                 className="px-3 p-1.5 bg-skyblue rounded text-slate-900 hover:bg-blue-300 transition" 
                 onClick={() => {setShowCreateBoardModal(true)}}
                 >
