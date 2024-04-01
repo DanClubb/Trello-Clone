@@ -7,7 +7,7 @@ export default async function Home() {
 
   if (!session) return <main className="text-center">Sign In</main>
   return (
-    <main className="flex justify-center gap-14 px-32 pt-11 grow">
+    <main className="flex flex-col justify-center gap-14 pt-11 px-4 grow lg:px-32 md:flex-row ">
       <DashboardNav />
       <Boards />
     </main>

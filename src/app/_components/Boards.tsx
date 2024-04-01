@@ -8,7 +8,6 @@ export default async function Boards() {
     return (
         <div className="grow flex flex-col max-w-200 w-fit">
             <header className="flex gap-2 mb-2">
-                {/* icon goes here  */}
                 👨‍💻
                 <h2 className="font-semibold">Your Boards</h2>
             </header>
