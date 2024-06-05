@@ -27,6 +27,7 @@ export default function Header({session}: HeaderProps) {
                 <button 
                 className="px-3 p-1.5 bg-skyblue rounded text-slate-900 hover:bg-blue-300 transition" 
                 onClick={() => {setShowCreateBoardModal(true)}}
+                disabled={!session}
                 >
                     Create
                 </button>
