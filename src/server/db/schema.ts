@@ -17,7 +17,7 @@ import { type AdapterAccount } from "next-auth/adapters";
  *
  * @see https://orm.drizzle.team/docs/goodies#multi-project-schema
  */
-export const createTable = pgTableCreator((name) => `temp_${name}`);
+export const createTable = pgTableCreator((name) => `trello_${name}`);
 
 export const posts = createTable(
   "post",
@@ -36,7 +36,7 @@ export const posts = createTable(
   },
   (example) => ({
     createdByIdIdx: index("created_by_idx").on(example.createdById),
-    nameIndex: index("name_idx").on(example.name),
+    nameIndex: index("name_index").on(example.name),
   })
 );
 
