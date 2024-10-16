@@ -4,9 +4,9 @@ import { env } from "~/env";
 
 export default {
   schema: "./src/server/db/schema.ts",
-  driver: "mysql2",
+  dialect: "postgresql",
   dbCredentials: {
-    uri: env.DATABASE_URL,
+    url: env.POSTGRES_URL,
   },
-  tablesFilter: ["Trello-Clone_*"],
+  tablesFilter: ["trello_*"],
 } satisfies Config;
