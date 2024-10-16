@@ -96,7 +96,7 @@ export default function CreateBoardModal({showModal, setShowModal}: CreateBoardM
                         disabled={boardTitle ? false : true}
                     >
                         {
-                            createBoard.isLoading ? 'Loading...' : 'Create'
+                            createBoard.isPending ? 'Loading...' : 'Create'
                         }
                     </button>
                 </form>
