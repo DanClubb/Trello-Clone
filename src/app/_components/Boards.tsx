@@ -3,7 +3,7 @@ import BoardCard from "./BoardCard";
 import CreateBoardCard from "./CreateBoardCard";
 
 export default async function Boards() {
-    const usersBoards = await api.board.getAllBoards.query()
+    const usersBoards = await api.board.getAllBoards()
 
     return (
         <div className="grow flex flex-col max-w-200 w-fit">
