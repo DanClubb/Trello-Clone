@@ -25,7 +25,7 @@ export default  function BoardSideBar({boardName}: BoardNavProps) {
                 alt='sidebar control arrow'  
                 onClick={() => setSideBarViewToggle((prev) => !prev)}
             />
-            <div className={`flex flex-col transition-all duration-500 ${sideBarViewToggle ? 'translate-x-0 delay-150' : '-translate-x-72'}`}>
+            <div className={`flex flex-col transition-all duration-500 ${sideBarViewToggle ? 'translate-x-0 delay-150' : '-translate-x-72'} h-full overflow-y-auto`}>
                 <h4 className="mb-2 px-4 text-sm font-bold">Your boards</h4>
                 {
                     boards?.map((board, index) => (
